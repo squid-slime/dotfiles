@@ -1,0 +1,127 @@
+
+window {
+	font-weight: bold;
+	font-size: 14px;
+	font-family: "FontAwesome";
+	box-shadow: inherit; 
+	text-shadow: 0px 0px 5px #222222;
+	border-radius: 15px 15px 15px 15px;
+	background: linear-gradient(90deg, rgba(0, 0, 0, 0.7) 10%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.7) 90%);
+}
+tooltip {
+	background-color: rgba(0, 0, 0, 0.80);
+	border-radius: 15px;
+	font-weight: bold;
+	font-size: 16;
+}
+#workspaces button {
+	color: #cccccc;
+	border-color:rgba(0, 0, 0, 0.0);
+}
+#workspaces button.focused {
+	color:  #ff00ff;
+	font-size: 16px;
+	padding-left: 25px;
+	padding-right: 25px;
+	transition: padding .2s ease-in-out .2s;
+	transition: font-size .5s;
+}
+#workspaces button.persistent {
+	color: #00ced1;
+}
+#workspaces button.urgent {
+	background: rgba(0, 0, 0, 0.0);
+	animation: urgent 0.5s infinite alternate;
+	padding-left: 25px;
+	padding-right: 25px;
+	transition: padding .3s ease-in-out .5s;
+}
+#workspaces button:hover {
+	font-size: 18px;
+	background: rgba(0, 0, 0, 0.0); 
+	animation: urgent 1.5s infinite alternate;
+	transition: font-size .2s;
+}
+
+@keyframes urgent {
+	0% {
+		color: #ff00ff;
+	}
+	100% {
+		color: #00ced1;
+	}
+	
+}
+#workspaces {
+	background-color: rgba(0, 0, 0, 0.0);
+	margin-right: 0px;
+	margin-left: 0px;
+	padding-left: 0px;
+	padding-right: 25px;
+}
+window.bar0 #clock {
+	color: #ff00ff;
+	margin-right: 10px;
+	margin-left: 0px;
+	padding-left: 50px;
+	padding-right: 20px;
+}
+window.bar0 #tray {
+	color: #ff0080; 
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-left: 50px;
+	padding-right: 0px;
+}
+#idle_inhibitor {
+	color: #ff00ff; 
+	margin-right: 0px;
+	margin-left: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+
+}
+window.bar0 #network {
+	color: #ff00ff; 
+	margin-right: 0px;
+	margin-left: 0px;
+	padding-left: 50px;
+	padding-right: 0px;
+}
+#scratchpad {
+	font-family: "FontAwesome";
+	box-shadow: inherit; 
+	text-shadow: 0px 0px 5px #222222;
+	border-radius: 15px 15px 15px 15px;
+	color: #ff00ff; 
+	margin-right: 0px;
+	margin-left: 0px;
+	padding-left: 0px;
+	padding-right: 110px;
+}
+#scratchpad.empty {
+	color: #CCCCCC; 
+	margin-right: 0px;
+	margin-left: 0px;
+	padding-left: 0px;
+	padding-right: 110px;
+}
+window.bar0 #temperature,
+window.bar0 #custom-CPUclocks,
+window.bar0 #memory,
+window.bar0 #custom-GPUwattage,
+window.bar0 #cpu {
+    color: #00ced1;
+    margin-right: 0px;
+    margin-left: 0px;
+    padding-left: 25px;
+    padding-right: 0px;
+}
+window.bar0 #pulseaudio {
+	color: #CCCCCC;
+	margin-right: 0px;
+	margin-left: 0px;
+	padding-left: 60px;
+	padding-right: 20px;
+}
+
