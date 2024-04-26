@@ -1,0 +1,35 @@
+[
+	{
+		"name": "bar0",
+		"position": "top",
+		"output": "DP-1",
+		"layer": "top",
+		"height": 0,  
+		"width": 2000,
+		"margin-top": 2,
+		"exclusive": "false",
+		"include": [ "~/.config/waybar/modules" ],
+	"modules-left": [
+			"sway/workspaces",
+			"sway/scratchpad"
+		],
+	"modules-right": [
+			"idle_inhibitor",
+			"network",
+			"tray",
+			"pulseaudio",
+			"clock"	
+			
+	],
+	"modules-center": [	
+			"temperature#GPU",
+			"custom/GPUwattage",
+			"temperature#water",
+			"cpu",
+			"temperature#CPU",
+			"custom/CPUclocks",
+			"memory"
+		]
+	},
+]
+
