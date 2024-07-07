@@ -1,35 +1,66 @@
 [
 	{
-		"name": "bar0",
-		"position": "top",
-		"output": "DP-1",
-		"layer": "top",
-		"height": 0,  
-		"width": 2000,
-		"margin-top": 2,
-		"exclusive": "false",
-		"include": [ "~/.config/waybar/modules" ],
-	"modules-left": [
-			"sway/workspaces",
-			"sway/scratchpad"
-		],
-	"modules-right": [
-			"idle_inhibitor",
-			"network",
-			"tray",
-			"pulseaudio",
-			"clock"	
-			
-	],
-	"modules-center": [	
-			"temperature#GPU",
-			"custom/GPUwattage",
-			"temperature#water",
-			"cpu",
-			"temperature#CPU",
-			"custom/CPUclocks",
-			"memory"
+	"name": "bar0",
+	"position": "top",
+	"exclusive": false,
+	"output": "DP-1",
+	"layer": "top",
+	"gtk-layer-shell": true,
+	"height": 35,  
+	"width": 0,
+	"margin-top": 4,
+	"margin-right": 3100,
+	"margin-left": 60,
+	"include": [ "~/.config/waybar/modules.txt" ],
+	"modules-center": [
+		"sway/workspaces",
+		"sway/scratchpad"
 		]
-	},
+},
+	{
+	"name": "bar1",
+	"position": "top",
+	"exclusive": false,
+	"gtk-layer-shell": true,
+	"output": "DP-1",
+	"layer": "top",
+	"height": 35,  
+	"width": 0,
+	"margin-top": 4,
+	"margin-right": 70,
+	"margin-left": 2840,
+	"include": [ "~/.config/waybar/modules.txt" ],
+	"modules-center": [
+		"idle_inhibitor",
+		"network",
+		"tray",
+		"pulseaudio",
+		"clock"	
+			
+	]
+},
+{
+	"name": "bar2",
+	"position": "top",
+	"exclusive": false,
+	"gtk-layer-shell": true,
+	"output": "DP-1",
+	"layer": "top",
+	"height": 35,  
+	"width": 0,
+	"margin-top": 4,
+	"margin-right": 1450,
+	"margin-left": 1450,
+	"include": [ "~/.config/waybar/modules.txt" ],
+	"modules-center": [
+		"temperature#GPU",
+		"custom/GPUwattage",
+		"temperature#water",
+		"cpu",
+		"temperature#CPU",
+		"custom/CPUclocks",
+		"memory"		
+	]
+},
 ]
 
