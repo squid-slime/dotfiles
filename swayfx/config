@@ -15,18 +15,6 @@ set $right l
 set $term foot
 set $menu exec wofi --show drun --insensitive
 
-# Named Workspaces and Physical Displays
-workspace 1 output "DP-1"
-workspace 2 output "DP-1"
-workspace 3 output "DP-1"
-workspace 4 output "DP-1"
-workspace 5 output "DP-1"
-workspace 6 output "DP-1"
-workspace 7 output "DP-1"
-workspace 8 output "DP-1"
-workspace 9 output "DP-1"
-workspace 10 output "DP-2"
-
 # Window Titles Alignment
 title_align center
 
@@ -48,20 +36,35 @@ client.placeholder        #00ced1        #00ced1          #ffffff       #00ced1 
 
 #Screen Configuration 
 ### "swaymsg -t get_outputs"
-# output 'HDMI-1A' pos 0 0 res 1920x1080@60Hz
-output 'DP-1' res 3440x1440@174.962Hz adaptive_sync on
+output 'HDMI-A-1' pos 4000 2000 res 1920x1080@60Hz
+output 'DP-1' pos 0 0 res 3440x1440@174.962Hz adaptive_sync on
 # output HEADLESS-1 pos 1080 0 res 1920x1080@30Hz
 # output 'DP-2' pos 0 0 res 1920x1080@60Hz
 
+# Named Workspaces and Physical Displays
+workspace 1 output "DP-1"
+workspace 2 output "DP-1"
+workspace 3 output "DP-1"
+workspace 4 output "DP-1"
+workspace 5 output "DP-1"
+workspace 6 output "DP-1"
+workspace 7 output "DP-1"
+workspace 8 output "DP-1"
+workspace 9 output "DP-1"
+workspace 10 output "HDMI-A-1"
+
 # Swayidle Configuration (Screen Sleep)
 exec swayidle \
-timeout 300 'swaymsg "output * dpms off"' \
-resume 'swaymsg "output * dpms on"'
+timeout 300 'swaymsg "output DP-1 dpms off"' \
+resume 'swaymsg "output DP-1 dpms on"'
 
-# Stylus
-input 48879:57005:Touchscreen_passthrough map_to_output 'DP-2'
-input 12267:4101:VEIKK.INC_VK1200_Mouse map_to_output 'DP-2'
-
+# Stylus mouse and keyboards
+# input 48879:57005:Touchscreen_passthrough map_to_output 'HDMI-A-1'
+# input 12267:4101:VEIKK.INC_VK1200_Mouse map_to_output 'HDMI-A-1'
+# input 12267:8194:VEIKK_Mouse map_to_output 'HDMI-A-1'
+# input 12267:8192:VEIKK_Pen map_to_output 'HDMI-A-1'
+input 6940:6935:ckb2:_Corsair_K65_RGB_Gaming_Keyboard_vM map_to_output 'DP-1'
+input 6940:6942:ckb1:_Corsair_Gaming_SCIMITAR_RGB_Mouse_vKB map_to_output 'DP-1'
 
 # Border Styling
 default_border pixel 2
@@ -70,8 +73,8 @@ default_border pixel 2
 corner_radius 10
 
 # Gaps screen edge
-gaps inner 20
-gaps outer 20
+gaps inner 0
+gaps outer 0
 
 
 # Keyboard Layout
@@ -80,15 +83,15 @@ input * xkb_layout gb
 
 #set blureffect 1>10 0>2
 shadows enable
-# shadow_blur_radius 10 
+#shadow_blur_radius 10 
 blur_contrast 1
 blur_saturation 0.8
-blur_brightness 2
+blur_brightness 1
 blur_radius 7
 blur_passes 2
 
 # blur waybar wofi
-layer_effects "wofi" blur enable; shadows enable
+layer_effects "wofi" blur enable; shadows enable; corner_radius 15
 layer_effects "waybar" blur enable; shadows enable; corner_radius 15
 
 # xray
@@ -107,6 +110,7 @@ exec_always export XDG_DATA_DIRS="$XDG_DATA_DIRS:~/.local/share"
 ############## scratchpad
 
 # Move Mullvad VPN window to scratchpad
+for_window [app_id="Mullvad VPN"] move scratchpad
 for_window [class="Mullvad VPN"] move scratchpad
 
 # move ckb-next to scratchpad
@@ -130,18 +134,20 @@ assign [app_id="nvtop"] workspace 8
 assign [app_id="gotop"] workspace 8
 
 # Assign FreeTube to Workspace 10
-assign [class="FreeTube"] workspace 9
+assign [app_id="FreeTube"] workspace 9
 
 # Assign Steam to workspace 7
 assign [instance="steamwebhelper"] workspace 7
 
 ########### Custom layouts
 
+# set calibre-ebook-viewer full screan
+for_window [app_id="calibre-ebook-viewer"] fullscreen enable
 # set firefox floating
 for_window [class="firefox"] floating enable
 
 # set Picture-in-picture freetube floating
-for_window [title="Picture-in-picture"] floating enable, sticky enable, move position 2882 10
+for_window [title="Picture-in-picture"] floating enable, sticky enable, move absolute 10 10
 
 # set r2modman floating
 for_window [class="r2modman"] floating enable
@@ -216,7 +222,7 @@ bindsym $mod+d exec $menu
 floating_modifier $mod normal
 bindsym $mod+Shift+c reload
 bindsym $mod+shift+Return exec foot -a footf
-bindsym $mod+b exec waterfox
+bindsym $mod+b exec cage -d  waterfox
 bindsym $mod+F8 exec keepassxc
 bindsym $mod+F13 exec swaymsg "input type=keyboard key=134"
 bindsym $mod+F14 exec swaymsg "input type=keyboard key=135"
@@ -342,6 +348,7 @@ bindsym $mod+r mode "resize"
 bar {
     swaybar_command waybar
 }
+
 ################################### STAR UP APPLICATIONS ###################
 
 set $gnome-schema org.gnome.desktop.interface
@@ -362,14 +369,13 @@ exec ~/.config/sway/swww-random.sh
 exec mako
 
 # Start Mullvad-VPN 
-exec mullvad-vpn
+exec mullvad-vpn %U --ozone-platform=wayland --enable-features=WaylandWindowDecorations
 
 # Start CKB
 # exec ckb-next
 
 # start veik driver
 exec /usr/lib/vktablet/vktablet
-
 
 # polkit
 ###exec "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
