@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=FreeTube
-Exec=/opt/FreeTube/freetube %U
+Exec=/opt/FreeTube/freetube %U --enable-features=UseOzonePlatform --ozone-platform=wayland
 Terminal=false
 Type=Application
 Icon=freetube
