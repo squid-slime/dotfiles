@@ -222,7 +222,7 @@ bindsym $mod+d exec $menu
 floating_modifier $mod normal
 bindsym $mod+Shift+c reload
 bindsym $mod+shift+Return exec foot -a footf
-bindsym $mod+b exec cage -d  waterfox
+bindsym $mod+b exec waterfox
 bindsym $mod+F8 exec keepassxc
 bindsym $mod+F13 exec swaymsg "input type=keyboard key=134"
 bindsym $mod+F14 exec swaymsg "input type=keyboard key=135"
