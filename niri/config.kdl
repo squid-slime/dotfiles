@@ -1,0 +1,150 @@
+input {
+    keyboard {
+        xkb {
+            options "ctrl:swap_rwin_rctl,compose:ralt"
+        }
+    }
+    touchpad {
+        tap
+        // dwt
+        // dwtp
+        natural-scroll
+        accel-speed 0.4
+        // click-method "clickfinger"
+        // accel-profile "flat"
+        // tap-button-map "left-middle-right"
+    }
+    mouse {
+    }
+    tablet {
+        map-to-output "eDP-1"
+    }
+}
+output "eDP-1" {
+    scale 3.0
+    transform "normal"
+    mode "1920x1080@59.934"
+    position x=0 y=0
+}
+
+layout {
+    focus-ring {
+        width 2
+        active-gradient from="#00ced1" to="#ff00ff" angle=45
+    }
+    border {
+        off
+    }
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+    default-column-width { proportion 0.5; }
+    gaps 24
+    struts {
+         left 0
+         right 0
+         top 0
+         bottom 0
+    }
+    center-focused-column "never"
+}
+spawn-at-startup "waybar"
+spawn-at-startup "~/scripts/seee-random.sh"
+spawn-at-startup "mako"
+
+animations {
+    slowdown 1.7
+    window-open {
+        duration-ms 300
+        curve "ease-out-cubic"
+    }
+    window-close {
+        duration-ms 300
+        curve "ease-out-cubic"
+    }
+    horizontal-view-movement {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+    }
+    window-movement {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+    }
+    window-resize {
+        spring damping-ratio=0.5 stiffness=700 epsilon=0.0001
+    }
+    workspace-switch {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+    }
+    config-notification-open-close {
+        spring damping-ratio=0.5 stiffness=800 epsilon=0.001
+    }
+}
+window-rule {
+    // match app-id="Alacritty"
+    // match app-id="Adwaita"
+    // opacity 0.9
+    // opacity 0.5
+    // opacity 0.98
+    open-maximized false
+}
+window-rule {
+    match app-id="waterfox"
+    match app-id="freetube"
+    match app-id="libreoffice"
+    open-maximized true
+    exclude title="Open Files"
+    exclude title="Save File"
+    exclude title="Select file to open"
+    exclude title="Select file to import"
+    exclude title="Select file to save to"
+    exclude title="Select a filename for exporting"
+    exclude title="Portable Document Format"
+    exclude title="Encapsulted PostScript"
+    exclude title="SVG Input"
+    exclude title="Document Properties"
+    exclude title="Save Document as Template"
+    exclude title="Preferences"
+}
+window-rule {
+    clip-to-geometry true
+    geometry-corner-radius 12
+}
+
+binds {
+
+//	spawn applications by key
+	Mod+D { spawn "wofi"; }
+    Mod+T { spawn "sh" "-c" "foot msg create-window || foot"; }
+    Mod+Shift+T { spawn "foot"; }
+	Mod+B  { spawn "waterfox"; }
+//	Mod+  { spawn ""; }
+
+// generic actions	
+    Mod+left { focus-column-left; }
+    Mod+right { focus-column-right; }
+    Mod+F { maximize-column; }
+    Mod+Q { close-window; }
+    Mod+M { power-off-monitors; }
+    Mod+Z  { consume-window-into-column; }
+    Mod+X { expel-window-from-column; }
+
+    Mod+Ctrl+Left  { focus-column-left; }
+    Mod+Ctrl+Down  { focus-window-down; }
+    Mod+Ctrl+Up    { focus-window-up; }
+    Mod+Ctrl+Right { focus-column-right; }
+
+// system control keys
+    XF86AudioRaiseVolume { spawn "swayosd-client" "--output-volume" "raise"; }
+    XF86AudioLowerVolume { spawn "swayosd-client" "--output-volume" "lower"; }
+    XF86AudioMute { spawn "swayosd-client" "--output-volume" "mute-toggle"; }
+    XF86MonBrightnessDown { spawn "swayosd-client" "--brightness" "lower"; }
+    XF86MonBrightnessUp { spawn "swayosd-client" "--brightness" "raise"; }
+
+
+
+    Mod+R { switch-preset-column-width; }
+
+    Mod+Space       { switch-layout "next"; }
+    Mod+Shift+Space { switch-layout "prev"; }
+}
