@@ -1,0 +1,42 @@
+[
+	{
+//	"name": "bar0",
+	"position": "top",
+//	"exclusive": true,
+//	"output": "DP-1",
+	"layer": "top",
+	"gtk-layer-shell": true,
+	"height": 25,  
+	"width": 0,
+	"margin-top": 0,
+//	"margin-right": 25,
+//	"margin-left": 25,
+	"include": [ "~/.config/waybar/modules" ],
+	"modules-left": [
+//		"sway/workspaces",
+		"sway/scratchpad",
+//		"idle_inhibitor",
+		"network",
+		"custom/icon1",
+		"custom/icon2",
+		"custom/icon3",
+		"tray"
+		],
+	"modules-center": [
+		"clock"
+		],
+	"modules-right": [
+//		"temperature#GPU",
+//		"custom/GPUwattage",
+//		"temperature#water",
+		"cpu",
+//		"temperature#CPU",
+//		"custom/CPUclocks",
+		"memory",
+		"custom/pacman",
+		"pulseaudio",
+		"battery"
+	]
+},
+]
+

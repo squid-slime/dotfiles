@@ -1,0 +1,99 @@
+window {
+	font-weight: bold;
+	font-size: 14px;
+	font-family: "texlive-fontsextra", "otf-aurulent-nerd"; 
+	box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.8);
+	text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
+	border-radius: 0px 0px 0px 0px;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+tooltip {
+	background-color: rgba(0, 0, 0, 0.80);
+	border-radius: 15px;
+	font-weight: bold;
+	font-size: 16;
+}
+
+#workspaces button {
+	color: #cccccc;
+	border-color:rgba(0, 0, 0, 0.0);
+}
+ /*
+#workspaces button.rewrite
+#workspaces button.foot
+#workspaces button.ranger
+#workspaces button.FreeTube
+#workspaces button.steam
+#workspaces button.waterfox {
+    color: #00ced1;
+}
+ */
+#workspaces button.focused {
+	color:  #ff00ff;
+}
+ /*
+#workspaces button.persistent {
+	color: #969696;
+}
+ */
+#workspaces button.urgent {
+	background: rgba(0, 0, 0, 0.0);
+	animation: urgent 0.5s infinite alternate;
+}
+
+#workspaces button:hover {
+	background: rgba(0, 0, 0, 0.0); 
+	animation: urgent 1.5s infinite alternate;
+}
+
+@keyframes urgent {
+	0% {
+		color: #ff00ff;
+	}
+	
+	100% {
+		color: #00ced1;
+	}
+	
+}
+
+#scratchpad,
+#scratchpad.empty,
+#workspaces {
+
+}
+
+#scratchpad {
+    color: #ff00ff;
+}
+
+#scratchpad.empty {
+    color: #CCCCCC;
+}
+
+#custom-icon1,
+#custom-icon2,
+#custom-icon3,
+#battery,
+#temperature,
+#custom-CPUclocks,
+#memory,
+#custom-GPUwattage,
+#cpu {
+    color: #00ced1;
+}
+
+#clock,
+#pulseaudio,
+#idle_inhibitor,
+#tray,
+#network {
+    color: #ff00ff;
+}
+
+#pulseaudio {
+    color: #CCCCCC;
+}
+
+
