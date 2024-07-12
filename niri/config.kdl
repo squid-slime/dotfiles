@@ -1,15 +1,16 @@
 input {
     keyboard {
         xkb {
-            options "ctrl:swap_rwin_rctl,compose:ralt"
+//            options "ctrl:swap_rwin_rctl,compose:ralt"
+			layout "gb"
         }
     }
     touchpad {
         tap
         // dwt
         // dwtp
-        natural-scroll
-        accel-speed 0.4
+        // natural-scroll
+        // accel-speed 0.4
         // click-method "clickfinger"
         // accel-profile "flat"
         // tap-button-map "left-middle-right"
@@ -21,38 +22,31 @@ input {
     }
 }
 output "eDP-1" {
-    scale 3.0
+    scale 2.0
     transform "normal"
-    mode "1920x1080@59.934"
+    mode "2736x1824@59.959"
     position x=0 y=0
 }
 
 layout {
     focus-ring {
-        width 2
-        active-gradient from="#00ced1" to="#ff00ff" angle=45
+		width 1
+		active-gradient from="#00ced1" to="#ff00ff" angle=45
     }
     border {
         off
     }
-    preset-column-widths {
-        proportion 0.33333
-        proportion 0.5
-        proportion 0.66667
-    }
-    default-column-width { proportion 0.5; }
-    gaps 24
-    struts {
-         left 0
-         right 0
-         top 0
-         bottom 0
-    }
     center-focused-column "never"
 }
+cursor {
+    xcursor-theme "breeze_cursors"
+}
 spawn-at-startup "waybar"
-spawn-at-startup "~/scripts/seee-random.sh"
+spawn-at-startup "swayosd-server" "-s" "~/.config/swayosd/style.css"
+spawn-at-startup "sh" "/home/squid/scripts/swww-random.sh"
 spawn-at-startup "mako"
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+// spawn-at-startu "/usr/bin/lxpolkit"
 
 animations {
     slowdown 1.7
@@ -80,17 +74,28 @@ animations {
         spring damping-ratio=0.5 stiffness=800 epsilon=0.001
     }
 }
+environment {
+    QT_QPA_PLATFORM "wayland"
+	ELECTRON_OZONE_PLATFORM_HINT "wayland"
+//    DISPLAY null
+	prefer-no-csd
+}
 window-rule {
-    // match app-id="Alacritty"
-    // match app-id="Adwaita"
-    // opacity 0.9
+    match is-active=false
+	opacity 0.95
+}
+window-rule {
+	match app-id="foot"
+	match app-id="keepassxc"
+	match app-id="kitty"
+	opacity 0.9
     // opacity 0.5
     // opacity 0.98
     open-maximized false
 }
 window-rule {
     match app-id="waterfox"
-    match app-id="freetube"
+    match app-id="FreeTube"
     match app-id="libreoffice"
     open-maximized true
     exclude title="Open Files"
@@ -110,7 +115,8 @@ window-rule {
     clip-to-geometry true
     geometry-corner-radius 12
 }
-
+	prefer-no-csd
+	
 binds {
 
 //	spawn applications by key
@@ -118,7 +124,9 @@ binds {
     Mod+T { spawn "sh" "-c" "foot msg create-window || foot"; }
     Mod+Shift+T { spawn "foot"; }
 	Mod+B  { spawn "waterfox"; }
-//	Mod+  { spawn ""; }
+	Mod+W  { spawn "pkill" "-SIGUSR1" "waybar"; }
+	Mod+Shift+W  { spawn "killall" "-SIGUSR2" "waybar"; }
+
 
 // generic actions	
     Mod+left { focus-column-left; }
@@ -140,7 +148,6 @@ binds {
     XF86AudioMute { spawn "swayosd-client" "--output-volume" "mute-toggle"; }
     XF86MonBrightnessDown { spawn "swayosd-client" "--brightness" "lower"; }
     XF86MonBrightnessUp { spawn "swayosd-client" "--brightness" "raise"; }
-
 
 
     Mod+R { switch-preset-column-width; }
