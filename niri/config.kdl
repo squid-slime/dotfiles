@@ -1,3 +1,4 @@
+prefer-no-csd
 input {
     keyboard {
         xkb {
@@ -75,10 +76,9 @@ animations {
     }
 }
 environment {
-    QT_QPA_PLATFORM "wayland"
+//	QT_QPA_PLATFORM "wayland"
 	ELECTRON_OZONE_PLATFORM_HINT "wayland"
-//    DISPLAY null
-	prefer-no-csd
+//	DISPLAY null
 }
 window-rule {
     match is-active=false
@@ -115,8 +115,6 @@ window-rule {
     clip-to-geometry true
     geometry-corner-radius 12
 }
-	prefer-no-csd
-	
 binds {
 
 //	spawn applications by key
