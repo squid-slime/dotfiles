@@ -13,13 +13,13 @@ set $down j
 set $up k
 set $right l
 set $term foot
-set $menu exec wofi --show drun --insensitive
+set $menu exec wofi --show drun --insensitive -I
 
 # Window Titles Alignment
 title_align center
 
 #Enable XWayland
-xwayland enable
+# xwayland disable
 
 # Neon Color Scheme for Sway
 # class ------------------border--------background--------text--------indicator--------child_border
@@ -80,28 +80,32 @@ gaps outer 0
 # Keyboard Layout
 input * xkb_layout gb
 
-
-#set blureffect 1>10 0>2
-shadows enable
-#shadow_blur_radius 10 
-blur_contrast 1
-blur_saturation 0.8
-blur_brightness 1
-blur_radius 7
-blur_passes 2
+# set shadows
+shadows enable 
+shadow_offset 0 7
+shadow_blur_radius 20
+shadow_color #2b2b2b
+shadow_inactive_color #000000
+blur_xray disable
 
 # blur waybar wofi
 layer_effects "wofi" blur enable; shadows enable; corner_radius 15
 layer_effects "waybar" blur enable; shadows enable; corner_radius 15
+shadows_on_csd enable
 
-# xray
-blur_xray disable
+#set blureffect 1>10 0>2
+blur_contrast 0.8
+blur_saturation 1
+blur_brightness 1
+blur_noise 0
+blur_radius 5
+blur_passes 1
 
 # dim unfocused
 default_dim_inactive 0.2
 
 # scratch pad settings
-scratchpad_minimize enable
+scratchpad_minimize disable
 
 # Export Data Directories
 exec_always export XDG_DATA_DIRS="$XDG_DATA_DIRS:~/.local/share"
@@ -124,6 +128,9 @@ for_window [window_role="dialog"] floating enable
 # Assign rtorrent to Workspace 6
 assign [app_id="rtorrent"] workspace 6
 
+# Assign journalctl -f to Workspace 6
+assign [app_id="journalctl-f"] workspace 10
+
 # Assign gomuks to Workspace 6
 assign [app_id="gomuks"] workspace 6
 
@@ -143,11 +150,18 @@ assign [instance="steamwebhelper"] workspace 7
 
 # set calibre-ebook-viewer full screan
 for_window [app_id="calibre-ebook-viewer"] fullscreen enable
+
 # set firefox floating
 for_window [class="firefox"] floating enable
 
 # set Picture-in-picture freetube floating
-for_window [title="Picture-in-picture"] floating enable, sticky enable, move absolute 10 10
+for_window [title="Picture-in-picture"] floating enable, sticky enable, move absolute position 20 40
+
+# set tuta floating
+for_window [app_id="tutanota-desktop"] floating enable, resize set 1000px 1000px
+
+# set syncthing tray floating
+for_window [app_id="syncthingtray"] floating enable, move absolute position 2070 40, resize set 800px 500px
 
 # set r2modman floating
 for_window [class="r2modman"] floating enable
@@ -224,18 +238,8 @@ bindsym $mod+Shift+c reload
 bindsym $mod+shift+Return exec foot -a footf
 bindsym $mod+b exec waterfox
 bindsym $mod+F8 exec keepassxc
-bindsym $mod+F13 exec swaymsg "input type=keyboard key=134"
-bindsym $mod+F14 exec swaymsg "input type=keyboard key=135"
-bindsym $mod+F15 exec swaymsg "input type=keyboard key=136"
-bindsym $mod+F16 exec swaymsg "input type=keyboard key=137"
-bindsym $mod+F17 exec swaymsg "input type=keyboard key=138"
-bindsym $mod+F18 exec swaymsg "input type=keyboard key=139"
-bindsym $mod+F19 exec swaymsg "input type=keyboard key=140"
-bindsym $mod+F20 exec swaymsg "input type=keyboard key=141"
-bindsym $mod+F21 exec swaymsg "input type=keyboard key=142"
-bindsym $mod+F22 exec swaymsg "input type=keyboard key=143"
-bindsym $mod+F23 exec swaymsg "input type=keyboard key=144"
-bindsym $mod+F24 exec swaymsg "input type=keyboard key=145"
+bindsym $mod+Shift+M exec tutanota-desktop --ozone-platform=wayland --enable-features=WaylandWindowDecorations
+bindsym $mod+N exec "pkill -SIGUSR2 waybar"
 
 ############ Screanshot prtscn
 # capture all screens to clipboard    
@@ -359,33 +363,27 @@ exec_always {
     gsettings set $gnome-schema font-name 'Monospace Regular'
 }
 
-# Start sunshine
-exec sunshine stream
+# Start list ~/.config/sway/autostart.sh
+exec sh ~/.config/sway/autostart.sh
 
-# Start swww-random command
-exec ~/.config/sway/swww-random.sh
-
-# Start mako
-exec mako
-
-# Start Mullvad-VPN 
-exec mullvad-vpn %U --ozone-platform=wayland --enable-features=WaylandWindowDecorations
-
-# Start CKB
-# exec ckb-next
-
-# start veik driver
-exec /usr/lib/vktablet/vktablet
-
-# polkit
-###exec "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
-exec /usr/bin/lxpolkit
-
-# lxsesion for theming
-# exec lxsession
-
-# py for window gapping 
-exec python ./scripts/dynamic_gaps.py
+exec_always {
+    export XDG_CURRENT_DESKTOP=sway
+    export MOZ_ENABLE_WAYLAND=1
+    export QT_QPA_PLATFORM=wayland
+    export QT_QPA_PLATFORMTHEME=qt5ct
+    export QT_STYLE_OVERRIDE=Adwaita-dark
+    export GTK_THEME=Adwaita:dark
+    export GTK2_RC_FILES="$HOME/.gtkrc2.0"
+    export CLUTTER_BACKEND=wayland
+    export XCURSOR_THEME=BreezeX-Dark
+    export XCURSOR_SIZE=24
+    export GDK_BACKEND=wayland
+    export EDITOR=/usr/bin/micro
+    export VISUAL='micro'
+    export TERM='foot'
+    export TERMINFO='foot-terminfo'
+    dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP MOZ_ENABLE_WAYLAND QT_QPA_PLATFORM QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE GTK_THEME GTK2_RC_FILES CLUTTER_BACKEND XCURSOR_THEME XCURSOR_SIZE GDK_BACKEND EDITOR VISUAL TERM TERMINFO
+}
 
 # Include additional configuration files
 include /etc/sway/config.d/*
