@@ -33,9 +33,26 @@
 	"modules-center": [
 		"idle_inhibitor",
 		"network",
-		"tray",
 		"pulseaudio",
 		"clock"	
+			
+	]
+},
+{
+	"name": "bar4",
+	"position": "top",
+	"exclusive": false,
+	"gtk-layer-shell": true,
+	"output": "DP-1",
+	"layer": "top",
+	"height": 35,  
+	"width": 0,
+	"margin-top": 4,
+	"margin-right": 950,
+	"margin-left": 2400,
+	"include": [ "~/.config/waybar/modules.txt" ],
+	"modules-center": [
+			"tray"
 			
 	]
 },

@@ -84,9 +84,12 @@ window.bar2 #cpu {
 window.bar1 #clock,
 window.bar1 #pulseaudio,
 window.bar1 #idle_inhibitor,
-window.bar1 #tray,
 window.bar1 #network {
     color: #ff00ff;
+}
+window.bar4 #tray {
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 window.bar1 #pulseaudio {
