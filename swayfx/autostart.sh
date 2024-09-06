@@ -11,7 +11,7 @@ start_with_delay() {
 start_with_delay 10 sunshine stream
 
 # Start swww-random command
-exec ~/.config/sway/swww-random.sh &
+# exec ~/.config/sway/swww-random.sh &
 
 # Start mako
 exec mako &
@@ -23,14 +23,11 @@ start_with_delay 10 mullvad-vpn %U --ozone-platform=wayland --enable-features=Wa
 # start_with_delay 10 ckb-next
 
 # Start veik driver
-exec /usr/lib/vktablet/vktablet &
 
 # Polkit
 # exec "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1" &
 exec /usr/bin/lxpolkit &
 
-# LXSession for theming (uncomment if needed)
-# exec lxsession &
 
 # Python for window gapping
 exec python ./scripts/dynamic_gaps.py &
@@ -41,7 +38,14 @@ exec /home/squid/scripts/syncthingtray-late-start.sh &
 # Start journal -f
 exec foot -a journalctl-f journalctl -f &
 
-# start tuta email
-#start_with_delay 10 tutanota-desktop --ozone-platform=wayland --enable-features=WaylandWindowDecorations
+start_with_delay 10 udiskie &
 
-start_with_delay 10 udiskie
+start_with_delay 10 QT_QPA_PLATFORM=xcb /usr/lib/vktablet/vktablet &
+
+start_with_delay 10 copyq &
+
+Start_with_delay 10 keepassxc &
+
+exec sh ~/scripts/random-waypaper.sh &
+
+exec ~/scripts/transparent-inactive.py
