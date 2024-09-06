@@ -4,8 +4,6 @@
 #
 # Read `man 5 sway` for a complete reference.
 
-
-
 # Variables
 set $mod Mod4
 set $left h
@@ -14,9 +12,6 @@ set $up k
 set $right l
 set $term foot
 set $menu exec wofi --show drun --insensitive -I
-
-# Window Titles Alignment
-title_align center
 
 #Enable XWayland
 # xwayland disable
@@ -30,17 +25,20 @@ client.unfocused          #00ced1        #00ced1          #ffffff       #00ced1 
 client.urgent             #ff00ff        #ff00ff          #ffffff       #ff00ff           #ff00ff
 client.placeholder        #00ced1        #00ced1          #ffffff       #00ced1           #00ced1
 
-# Wallpaper
-# set $wallpapers_path ~/.config/sway/background
-# output * bg `find $wallpapers_path -type f | shuf -n 1` fill
-
 #Screen Configuration 
 ### "swaymsg -t get_outputs"
-output 'HDMI-A-1' pos 4000 2000 res 1920x1080@60Hz
-output 'DP-1' pos 0 0 res 3440x1440@174.962Hz adaptive_sync on
-# output HEADLESS-1 pos 1080 0 res 1920x1080@30Hz
-# output 'DP-2' pos 0 0 res 1920x1080@60Hz
-
+output 'DP-1' { 
+position 0 0 
+resolution 3440x1440@119.961Hz 
+adaptive_sync on 
+scale 0
+}
+# sleep / screenoff
+exec swayidle -w \
+    timeout 400 'swaymsg "output * disable"' \
+    timeout 3600 'systemctl suspend' \
+    resume 'swaymsg "output * enable"'
+    
 # Named Workspaces and Physical Displays
 workspace 1 output "DP-1"
 workspace 2 output "DP-1"
@@ -51,20 +49,12 @@ workspace 6 output "DP-1"
 workspace 7 output "DP-1"
 workspace 8 output "DP-1"
 workspace 9 output "DP-1"
-workspace 10 output "HDMI-A-1"
-
-# Swayidle Configuration (Screen Sleep)
-exec swayidle \
-timeout 300 'swaymsg "output DP-1 dpms off"' \
-resume 'swaymsg "output DP-1 dpms on"'
-
-# Stylus mouse and keyboards
-# input 48879:57005:Touchscreen_passthrough map_to_output 'HDMI-A-1'
-# input 12267:4101:VEIKK.INC_VK1200_Mouse map_to_output 'HDMI-A-1'
-# input 12267:8194:VEIKK_Mouse map_to_output 'HDMI-A-1'
-# input 12267:8192:VEIKK_Pen map_to_output 'HDMI-A-1'
-input 6940:6935:ckb2:_Corsair_K65_RGB_Gaming_Keyboard_vM map_to_output 'DP-1'
-input 6940:6942:ckb1:_Corsair_Gaming_SCIMITAR_RGB_Mouse_vKB map_to_output 'DP-1'
+workspace 10 output {
+"HDMI-A-1"
+"DP-1"	
+"DP-2"	
+"DP-3"	
+}
 
 # Border Styling
 default_border pixel 2
@@ -84,13 +74,15 @@ input * xkb_layout gb
 shadows enable 
 shadow_offset 0 7
 shadow_blur_radius 20
-shadow_color #2b2b2b
+shadow_color #000000
 shadow_inactive_color #000000
 blur_xray disable
 
 # blur waybar wofi
 layer_effects "wofi" blur enable; shadows enable; corner_radius 15
 layer_effects "waybar" blur enable; shadows enable; corner_radius 15
+
+# layer_effects "swaync-control-center" blur enable; shadows enable; corner_radius 15
 shadows_on_csd enable
 
 #set blureffect 1>10 0>2
@@ -100,6 +92,7 @@ blur_brightness 1
 blur_noise 0
 blur_radius 5
 blur_passes 1
+blur enable
 
 # dim unfocused
 default_dim_inactive 0.2
@@ -110,243 +103,156 @@ scratchpad_minimize disable
 # Export Data Directories
 exec_always export XDG_DATA_DIRS="$XDG_DATA_DIRS:~/.local/share"
 
-
 ############## scratchpad
-
-# Move Mullvad VPN window to scratchpad
 for_window [app_id="Mullvad VPN"] move scratchpad
-for_window [class="Mullvad VPN"] move scratchpad
-
-# move ckb-next to scratchpad
 for_window [app_id="ckb-next"] move scratchpad
 
 ############# workspaces
-
-for_window [window_type="dialog"] floating enable
-for_window [window_role="dialog"] floating enable
-
-# Assign rtorrent to Workspace 6
-assign [app_id="rtorrent"] workspace 6
-
 # Assign journalctl -f to Workspace 6
 assign [app_id="journalctl-f"] workspace 10
 
-# Assign gomuks to Workspace 6
-assign [app_id="gomuks"] workspace 6
-
-# Assign nvtop to Workspace 8
-assign [app_id="nvtop"] workspace 8
-
-# Assign gotop to Workspace 8
-assign [app_id="gotop"] workspace 8
-
-# Assign FreeTube to Workspace 10
-assign [app_id="FreeTube"] workspace 9
-
-# Assign Steam to workspace 7
-assign [instance="steamwebhelper"] workspace 7
-
 ########### Custom layouts
-
-# set calibre-ebook-viewer full screan
-for_window [app_id="calibre-ebook-viewer"] fullscreen enable
-
-# set firefox floating
-for_window [class="firefox"] floating enable
-
-# set Picture-in-picture freetube floating
-for_window [title="Picture-in-picture"] floating enable, sticky enable, move absolute position 20 40
-
-# set tuta floating
-for_window [app_id="tutanota-desktop"] floating enable, resize set 1000px 1000px
-
-# set syncthing tray floating
-for_window [app_id="syncthingtray"] floating enable, move absolute position 2070 40, resize set 800px 500px
-
-# set r2modman floating
-for_window [class="r2modman"] floating enable
-
-# set Ranger file manger rules
-for_window [app_id="ranger"] floating enable
-
-# set steam rules
-for_window [instance="steamwebhelper"] floating enable
-for_window [title="Steam"] floating disable
-for_window [title="Steam Settings"] floating enable
-for_window [title="Steam - Browser"] floating enable
-for_window [title="Friends List"] floating disable, resize set 275px 1000px
-
-# set keepassxc floating
-for_window [app_id="org.keepassxc.KeePassXC"] floating enable, sticky enable
-
-# set foot "footf" floating
-for_window [app_id="footf"] floating enable
-
-# set ckb-next floating
-# for_window [app_id="ckb-next"] floating enable
-
-# set steam floating             
-# for_window [class="steam"] floating enable
-
-# set swayimg floating
-for_window [app_id="swayimg"] floating enable
-
-# Assign Engrampa to floating
-for_window [app_id="engrampa"] floating enable, resize set 800px 800px
-
-# Assign nemo to floating
-for_window [app_id="nemo"] foating enable
-
-# networkmanager tui opened with waybar
-for_window [app_id="nmtui"] floating enable, resize set 600px 500px
-
-# audio tui opened with waybar
-for_window [app_id="ncpm"] floating enable, resize set 700px 600px
-
-# btop tui opened with waybar
-for_window [app_id="btop"] floating enable, resize set 800px 800px
-
-# power menu tui opened with waybar
-for_window [app_id="powermenu"] floating enable, resize set 210px 200px
-
-for_window [app_id="zenity"] floating enable
-
-# calendar menu tui opened with waybar
-for_window [app_id="calendar"] floating enable, resize set 1300px 800px
-
-## Aplication theming
-for_window [app_id="foot"] blur enable
-for_window [app_id="footf"] blur enable
-for_window [app_id="ranger"] blur enable
-for_window [app_id="calender"] blur enable
-for_window [app_id="powermenu"] blur enable
-for_window [app_id="btop"] blur enable
-for_window [app_id="ncpm"] blur enable
-for_window [app_id="nmtui"] blur enable
-for_window [class="foot"] blur enable
-for_window [app_id="nvtop"] blur enable
-for_window [app_id="rtorrent"] blur enable
-for_window [app_id="gotop"] blur enable
+for_window { 
+	[window_type="dialog"] floating enable
+	[window_role="dialog"] floating enable
+	[app_id="xdg-desktop-portal-gtk"] floating enable
+	[title="Select one or more files to open"] floating enable
+	[app_id="net.sapples.LiveCaptions"] floating enable, sticky enable
+	[app_id="calibre-ebook-viewer"] fullscreen enable
+	[title="Picture-in-picture"] floating enable, sticky enable, move absolute position 20 40
+	[app_id="tutanota-desktop"] floating enable, resize set 1000px 1000px
+	[app_id="syncthingtray"] floating enable, move absolute position 2070 40, resize set 800px 500px
+	[app_id="com.github.hluk.copyq"] floating enable, move absolute position 2070 40, resize set 800px 500px
+	[app_id="ranger"] floating enable
+	[app_id="org.keepassxc.KeePassXC"] floating enable, sticky enable
+	[app_id="footf"] floating enable
+	[app_id="ckb-next"] floating enable
+	[app_id="swayimg"] floating enable, blur enable
+	[app_id="engrampa"] floating enable, resize set 800px 800px
+	[app_id="nmtui"] floating enable, resize set 600px 500px
+	[app_id="ncpm"] floating enable, resize set 700px 600px
+	[app_id="btop"] floating enable, resize set 800px 800px
+	[app_id="powermenu"] floating enable, resize set 210px 200px
+	[app_id="waterfox"] inhibit_idle focus
+	[app_id="freetube"] inhibit_idle fullscreen
+}
 
 # Key bindings -------------------------------------------------------
 ######### Basics:
-bindsym $mod+Return exec $term
-bindsym $mod+Shift+q kill
-bindsym $mod+d exec $menu
 floating_modifier $mod normal
-bindsym $mod+Shift+c reload
-bindsym $mod+shift+Return exec foot -a footf
-bindsym $mod+b exec waterfox
-bindsym $mod+F8 exec keepassxc
-bindsym $mod+Shift+M exec tutanota-desktop --ozone-platform=wayland --enable-features=WaylandWindowDecorations
-bindsym $mod+N exec "pkill -SIGUSR2 waybar"
+bindsym {
+$mod+Return exec $term
+$mod+Shift+c reload
+$mod+d exec $menu
+$mod+Shift+q kill
+$mod+shift+Return exec foot -a footf
+$mod+b exec waterfox
+$mod+F8 exec keepassxc
+$mod+Shift+M exec tutanota-desktop --ozone-platform=wayland --enable-features=WaylandWindowDecorations
+$mod+N exec "pkill -SIGUSR2 waybar"
+$mod+Shift+u exec /home/squid/scripts/open-in-browser.sh
+$mod+O exec ~/scripts/toggle-livecaptions.sh 
+$mod+Shift+n exec swaync-client -t -sw
+$mod+Home exec "swaymsg "[floating]" move position 0 0"
 
-############ Screanshot prtscn
-# capture all screens to clipboard    
-bindsym Shift+Print exec grim - | wl-copy    
-    
+# Media control keys
+XF86AudioPlay exec playerctl play-pause
+XF86AudioNext exec playerctl next
+XF86AudioPrev exec playerctl previous
+XF86AudioStop exec playerctl stop
+
+# Screanshot prtscn # capture all screens to clipboard    
+$mod+Print exec grim - | wl-copy    
+
 # capture the specified screen area to clipboard    
-bindsym Shift+Alt+Print exec grim -g "$(slurp)" - | wl-copy    
+$mod+Shift+Print exec grim -g "$(slurp)" - | wl-copy    
     
 # capture the focused monitor to clipboard    
-bindsym Shift+Control+Print exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') - | wl-copy
-
-#############
-
-# screen backlight, first set min and restore previous
-exec light -N 5
-exec light -I
-bindsym XF86MonBrightnessUp   exec "light -A 10 && light -O"
-bindsym XF86MonBrightnessDown exec "light -U 10 && light -O"
-# keyboard backlight
-bindsym XF86KbdBrightnessUp   exec "light -S 100 -s sysfs/leds/spi::kbd_backlight"
-bindsym XF86KbdBrightnessDown exec "light -S 0   -s sysfs/leds/spi::kbd_backlight"
-
-#############
+$mod+Control+Print exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') - | wl-copy
 
 #moving around:
-bindsym $mod+$left focus left
-bindsym $mod+$down focus down
-bindsym $mod+$up focus up
-bindsym $mod+$right focus right
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+$mod+$left focus left
+$mod+$down focus down
+$mod+$up focus up
+$mod+$right focus right
+$mod+Left focus left
+$mod+Down focus down
+$mod+Up focus up
+$mod+Right focus right
 
-bindsym $mod+Shift+$left move left
-bindsym $mod+Shift+$down move down
-bindsym $mod+Shift+$up move up
-bindsym $mod+Shift+$right move right
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+$mod+Shift+$left move left
+$mod+Shift+$down move down
+$mod+Shift+$up move up
+$mod+Shift+$right move right
+$mod+Shift+Left move left
+$mod+Shift+Down move down
+$mod+Shift+Up move up
+$mod+Shift+Right move right
 
 # Workspaces:
-bindsym $mod+1 workspace number 1
-bindsym $mod+2 workspace number 2
-bindsym $mod+3 workspace number 3
-bindsym $mod+4 workspace number 4
-bindsym $mod+5 workspace number 5
-bindsym $mod+6 workspace number 6
-bindsym $mod+7 workspace number 7
-bindsym $mod+8 workspace number 8
-bindsym $mod+9 workspace number 9
-bindsym $mod+0 workspace number 10
-
-bindsym Ctrl+Right workspace next
-
-bindsym Ctrl+Left workspace prev
-
-
-bindsym $mod+Shift+1 move container to workspace number 1
-bindsym $mod+Shift+2 move container to workspace number 2
-bindsym $mod+Shift+3 move container to workspace number 3
-bindsym $mod+Shift+4 move container to workspace number 4
-bindsym $mod+Shift+5 move container to workspace number 5
-bindsym $mod+Shift+6 move container to workspace number 6
-bindsym $mod+Shift+7 move container to workspace number 7
-bindsym $mod+Shift+8 move container to workspace number 8
-bindsym $mod+Shift+9 move container to workspace number 9
-bindsym $mod+Shift+0 move container to workspace number 10
+$mod+1 workspace number 1
+$mod+2 workspace number 2
+$mod+3 workspace number 3
+$mod+4 workspace number 4
+$mod+5 workspace number 5
+$mod+6 workspace number 6
+$mod+7 workspace number 7
+$mod+8 workspace number 8
+$mod+9 workspace number 9
+$mod+0 workspace number 10
+Ctrl+Right workspace next
+Ctrl+Left workspace prev
+$mod+Shift+1 move container to workspace number 1
+$mod+Shift+2 move container to workspace number 2
+$mod+Shift+3 move container to workspace number 3
+$mod+Shift+4 move container to workspace number 4
+$mod+Shift+5 move container to workspace number 5
+$mod+Shift+6 move container to workspace number 6
+$mod+Shift+7 move container to workspace number 7
+$mod+Shift+8 move container to workspace number 8
+$mod+Shift+9 move container to workspace number 9
+$mod+Shift+0 move container to workspace number 10
 
 # Layout stuff:
-bindsym $mod+shift+v splith
-bindsym $mod+v splitv
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-bindsym $mod+f fullscreen
-bindsym $mod+Shift+space floating toggle
-bindsym $mod+space focus mode_toggle
-bindsym $mod+a focus parent
-bindsym $mod+control+return sticky toggle
+$mod+shift+v splith
+$mod+v splitv
+$mod+s layout stacking
+$mod+w layout tabbed
+$mod+e layout toggle split
+$mod+f fullscreen
+$mod+Shift+space floating toggle
+$mod+space focus mode_toggle
+$mod+a focus parent
+$mod+control+return sticky toggle
 
 # Media Keys
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && pkill -RTMIN+1 swaybar
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && pkill -RTMIN+1 swaybar
-bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+1 swaybar
+XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && pkill -RTMIN+1 swaybar
+XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && pkill -RTMIN+1 swaybar
+XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+1 swaybar
 
 # Scratchpad:
-bindsym $mod+Shift+minus move scratchpad
-bindsym $mod+minus scratchpad show
+$mod+Shift+minus move scratchpad
+$mod+minus scratchpad show
 
+$mod+r mode "resize"
+
+}
 # Resizing containers:
 mode "resize" {
-    bindsym $left resize shrink width 10px
-    bindsym $down resize grow height 10px
-    bindsym $up resize shrink height 10px
-    bindsym $right resize grow width 10px
-    bindsym Left resize shrink width 10px
-    bindsym Down resize grow height 10px
-    bindsym Up resize shrink height 10px
-    bindsym Right resize grow width 10px
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+    bindsym {
+    	$left resize shrink width 10px
+		$down resize grow height 10px
+		$up resize shrink height 10px
+		$right resize grow width 10px
+		Left resize shrink width 10px
+		Down resize grow height 10px
+		Up resize shrink height 10px
+		Right resize grow width 10px
+		Return mode "default"
+		Escape mode "default"
+		}
 }
-bindsym $mod+r mode "resize"
+
 ########## BAR
 # Status Bar:
 bar {
@@ -355,25 +261,21 @@ bar {
 
 ################################### STAR UP APPLICATIONS ###################
 
-set $gnome-schema org.gnome.desktop.interface
-exec_always {
-    gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
-    gsettings set $gnome-schema icon-theme 'HighContrast'
-    gsettings set $gnome-schema cursor-theme 'Graphite Dark Cursors'
-    gsettings set $gnome-schema font-name 'Monospace Regular'
-}
+# Hide curser
+seat * hide_cursor 10000
 
 # Start list ~/.config/sway/autostart.sh
 exec sh ~/.config/sway/autostart.sh
 
-exec_always {
+# Notification Daemon
+exec swaync
+
+exec {
     export XDG_CURRENT_DESKTOP=sway
     export MOZ_ENABLE_WAYLAND=1
     export QT_QPA_PLATFORM=wayland
     export QT_QPA_PLATFORMTHEME=qt5ct
     export QT_STYLE_OVERRIDE=Adwaita-dark
-    export GTK_THEME=Adwaita:dark
-    export GTK2_RC_FILES="$HOME/.gtkrc2.0"
     export CLUTTER_BACKEND=wayland
     export XCURSOR_THEME=BreezeX-Dark
     export XCURSOR_SIZE=24
