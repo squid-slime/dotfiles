@@ -3,8 +3,8 @@ window {
 	font-weight: bold;
 	font-size: 14px;
 	font-family: "FontAwesome", "otf-aurulent-nerd";
-	box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.8);
-	text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
+	box-shadow: inherit;
+	text-shadow: inherit;
 	border-radius: 15px 15px 15px 15px;
 	background: rgba(0, 0, 0, 0.5);
 }
@@ -20,24 +20,11 @@ tooltip {
 	color: #cccccc;
 	border-color:rgba(0, 0, 0, 0.0);
 }
- /*
-#workspaces button.rewrite
-#workspaces button.foot
-#workspaces button.ranger
-#workspaces button.FreeTube
-#workspaces button.steam
-#workspaces button.waterfox {
-    color: #00ced1;
-}
- */
+
 #workspaces button.focused {
 	color:  #ff00ff;
 }
- /*
-#workspaces button.persistent {
-	color: #969696;
-}
- */
+
 #workspaces button.urgent {
 	background: rgba(0, 0, 0, 0.0);
 	animation: urgent 0.5s infinite alternate;
@@ -59,10 +46,7 @@ tooltip {
 	
 }
 
-#scratchpad,
-#scratchpad.empty,
 #workspaces {
-
 }
 
 #scratchpad {
@@ -77,23 +61,29 @@ window.bar2 #temperature,
 window.bar2 #custom-CPUclocks,
 window.bar2 #memory,
 window.bar2 #custom-GPUwattage,
-window.bar2 #cpu {
+window.bar2 #cpu,
+window.bar2 #disk {
     color: #00ced1;
 }
 
 window.bar1 #clock,
-window.bar1 #pulseaudio,
-window.bar1 #idle_inhibitor,
+window.bar1 #idle_inhibitor.deactivated,
 window.bar1 #network {
     color: #ff00ff;
+}
+window.bar1 #idle_inhibitor.activated {
+	color: #00ced1;
 }
 window.bar4 #tray {
 	padding-left: 20px;
 	padding-right: 20px;
 }
 
-window.bar1 #pulseaudio {
-    color: #CCCCCC;
+window.bar1 #wireplumber {
+    color: #cccccc;
 }
-
+#custom-notification {
+    color: #ff00ff;
+	font-family: "NotoSansMono Nerd Font";
+}
 

@@ -1,69 +1,118 @@
 {
 "sway/workspaces": {
-	"window-rewrite": {
-		"waterfox": "",
-		"foot": "",
-	},
+	"format": "{icon}",
 	"disable-scroll": false,
-	"all-outputs": false,
-	"active-only": true,
-	"format": " <b>{icon}</b> {windows} ",
+	"all-outputs": true,
+	"active-only": false,
 	"persistent-workspaces": {
-                        "1": ["DP-1"],
-                        "2": ["DP-1"], 
-                        "3": ["DP-1"],
-                        "4": ["DP-1"],
-                        "5": ["DP-1"],
-                        "6": ["DP-1"],
-                        "7": ["DP-1"],
-                        "8": ["DP-1"],
-                        "9": ["DP-1"],
-                        "10": ["DP-1"],
-	},
+				"1": ["DP-1"],
+				"2": ["DP-1"],
+				"3": ["DP-1"],
+				"4": ["DP-1"],
+				"5": ["DP-1"],
+				"6": ["DP-1"],
+				"7": ["DP-1"],
+				"8": ["DP-1"],
+				"9": ["DP-1"],
+				"10": ["DP-1"],
+},
+	
 	"format-icons": {
-			"1": "1",
-      			"2": "2",
-      			"3": "3",
-      			"4": "4",
-      			"5": "5",
-      			"6": "6",
-      			"7": "7",
-      			"8": "8",
-      			"9": "9",
-      			"10": "10",
+				"1": " 1 ",
+      			"2": " 2 ",
+      			"3": " 3 ",
+      			"4": " 4 ",
+      			"5": " 5 ",
+      			"6": " 6 ",
+      			"7": " 7 ",
+      			"8": " 8 ",
+      			"9": " 9 ",
+    			"10": " 10 ",
       			"urgent": "",
       			"focused": "",
-      			"persistent": "@",   	      	
-	}
+		},
+		"sort-by-number": true
 },
+
+
 "sway/scratchpad": {
+	"max-length": 10,
+	"min-length": 10,
 	"format": "{icon} {count}",
 	"show-empty": true,
 	"format-icons": ["", ""],
 	"tooltip": true,
 	"tooltip-format": "{app}: {title}",
 	"on-click": "swaymsg scratchpad show",
+	"on-middle-click": ""
 },
 "clock": {
-	"max-length": 5,
-	"min-length": 5,
+	"max-length": 10,
+	"min-length": 10,
 	"format": "{:%H:%M}",
 	"tooltip-format": "{:%a | %d | %b}",
 	"on-click": "foot --term=foot --app-id=powermenu python ~/.config/sway/pypowerreset.py",
-	"on-click-middle": "exec /home/squid/.config/sway/swww-random.sh "
+//	"on-click-middle": "exec /home/squid/.config/sway/swww-random.sh "
+},
+"custom/notification": {
+	"max-length": 5,
+	"min-length": 5,
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "<span foreground='red'><sup></sup></span>",
+      "none": "",
+      "dnd-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-none": "",
+      "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "inhibited-none": "",
+      "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-inhibited-none": ""
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+"disk#squid": {
+	"max-length": 10,
+	"min-length": 10,
+	"interval": 30,
+	"format": " {percentage_used}%",
+	"path": "/home",
+	"tooltip-format": "System | {free} Free | {used} Used | {total} Total"
+},
+"disk#SSD": {
+	"max-length": 10,
+	"min-length": 10,
+	"interval": 30,
+	"format": " {percentage_used}%",
+	"path": "/mnt/f45d633c-17e0-4601-979f-d3976a79a4fb/",
+	"tooltip-format": "SSD | {free} Free | {used} Used | {total} Total"
+},
+"disk#HDD": {
+	"max-length": 10,
+	"min-length": 10,
+	"interval": 30,
+	"format": " {percentage_used}%",
+	"path": "/mnt/de669ea0-2eea-49e4-b693-da19a30b169b/",
+	"tooltip-format": "HDD | {free} Free | {used} Used | {total} Total"
 },
 "temperature#water": {
-	"max-length": 6,
-	"min-length": 6, 
+	"max-length": 10,
+	"min-length": 10, 
 	"thermal-zone": 0,
 	"hwmon-path": "/dev/t_sensor_temp",
 	"format": "{temperatureC:2}ᶜ {icon}",
 	"format-icons": [ ""],
 	"tooltip-format": "{} Water Temps"
 },
+
 "temperature#CPU": {
-	"max-length": 6,
-	"min-length": 6, 
+	"max-length": 10,
+	"min-length": 10, 
 	"thermal-zone": 0,
 	"hwmon-path": "/dev/cpu_temp",
 	"format": "{temperatureC:2}ᶜ {icon}",
@@ -71,25 +120,28 @@
 	"on-click": "foot --term=foot --app-id=gotop gotop",
 	"tooltip-format": "{} CPU Temps"
 },
+
 "custom/CPUclocks": {
-	"max-length": 6,
-	"min-length": 6, 
+	"max-length": 10,
+	"min-length": 10, 
 	"exec": "bash /home/squid/.config/waybar/customs/CPU-clocks.sh",
 	"interval": 5, // Update interval in seconds
 	"format": "{}",
 	"tooltip-format": "{} CPU Clocks Speeds"
 },
+
 "custom/GPUwattage": {
-	"max-length": 6,
-	"min-length": 6, 
+	"max-length": 10,
+	"min-length": 10, 
 	"exec": "bash /home/squid/.config/waybar/customs/GPU-wattage.sh",
 	"interval": 5, // Update interval in seconds
 	"format": "{}",
 	"tooltip-format": "{} GPU Wattage"
 },
+
 "temperature#GPU": {
-	"max-length": 6,
-	"min-length": 6, 
+	"max-length": 10,
+	"min-length": 10, 
 	"thermal-zone": 0,
 	"hwmon-path": "/dev/gpu_temp",
 	"format": "{temperatureC:2}ᶜ {icon}",
@@ -97,17 +149,19 @@
 	"on-click": "foot --term=foot-direct --app-id=nvtop nvtop",
 	"tooltip-format": "{} GPU Temps"
 },
+
 "cpu": {
-	"max-length": 6,
-	"min-length": 6, 
+	"max-length": 10,
+	"min-length": 10, 
 	"interval": 10,
 	"format": "{usage:2}% ",
 	"max-length": 10,
 	"on-click": "foot --term=foot-direct --app-id=btop btop"
 },
+
 "network": {
-	"max-length": 20,
-	"min-length": 20,
+	"max-length": 25,
+	"min-length": 25,
 //	"format-wifi": "{bandwidthDowbBits} | {bandwidthUpBits}",
 	"format": " {bandwidthDownBits} | {bandwidthUpBits} ",
 	"interval": 3,
@@ -116,50 +170,43 @@
 	"format-disconnected": "",
 	"tooltip-format": "{ifname}: {ipaddr}"
 },
+
 "idle_inhibitor": {
+	"max-length": 5,
+	"min-length": 5,
 	"format": "{icon}",
 	"format-icons": {
-	"activated": "",
-	"deactivated": "",
+	"activated": "",
+	"deactivated": ""  ,
 },
+
 "idle_inhibitor": {
-    "actions": {"on-click-right": "mode",
-                "on-click-middle": "exec /home/squid/.config/sway/swww-random.sh ",
-                "on-scroll-down": "light -U 10 && light -O"
-               }
+    "actions": {
+    "on-click-right": "mode",
+		}
 	}
 },
+
 "memory": {
-	"max-length": 8,
-	"min-length": 8,
+	"max-length": 10,
+	"min-length": 10,
 	"interval": 30,
 	"format": "{used:0.1f}G "
 },
+
 "tray": {
-	"max-length": 12,
-	"min-length": 12,
+	"spacing": 7,
+	"max-length": 0,
+	"min-length": 200,
 },
-"pulseaudio": {		// too lazy to imploment pipewire
-	"max-length": 14,
-	"min-length": 14,
-	"scroll-step": 5, 
-	"format": "{icon} {volume}% {format_source}",
-	"format-muted": "{format_source}",
-	"format-bluetooth": "{icon}󰂰 {volume}% {format_source}",
-	"format-bluetooth-muted": "{format_source}",
 
-	"format-source": "{volume}%",
-	"format-source-muted": "",
-
-	"format-icons": {
-		"headphones": "",
-		"handsfree": "",
-		"headset": "",
-		"phone": "",
-		"portable": "",
-		"car": "",
-		"default": ["", "", ""]
-		},
-"on-click": "foot --term=foot --app-id=ncpm ncpamixer"
+"wireplumber": {
+	"max-length": 10,
+	"min-length": 10,
+    "format": "{volume}% {icon}",
+    "format-muted": "",
+    "on-click-right": "helvum",
+    "format-icons": ["", "", ""],	
+	"on-click": "foot --term=foot --app-id=ncpm pulsemixer"
 	}
 }

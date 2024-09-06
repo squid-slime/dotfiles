@@ -11,7 +11,8 @@
 	"margin-top": 4,
 	"margin-right": 3100,
 	"margin-left": 60,
-	"include": [ "~/.config/waybar/modules.txt" ],
+	"fixed-center": true,
+	"include": [ "~/.config/waybar/modules" ],
 	"modules-center": [
 		"sway/workspaces",
 		"sway/scratchpad"
@@ -28,15 +29,17 @@
 	"width": 0,
 	"margin-top": 4,
 	"margin-right": 70,
-	"margin-left": 2840,
-	"include": [ "~/.config/waybar/modules.txt" ],
+	"margin-left": 2950,
+	"fixed-center": true,
+	"include": [ "~/.config/waybar/modules" ],
 	"modules-center": [
 		"idle_inhibitor",
 		"network",
-		"pulseaudio",
-		"clock"	
-			
+		"wireplumber",
+		"clock",
+		"custom/notification"
 	]
+	
 },
 {
 	"name": "bar4",
@@ -50,7 +53,8 @@
 	"margin-top": 4,
 	"margin-right": 950,
 	"margin-left": 2400,
-	"include": [ "~/.config/waybar/modules.txt" ],
+	"fixed-center": true,
+	"include": [ "~/.config/waybar/modules" ],
 	"modules-center": [
 			"tray"
 			
@@ -64,11 +68,12 @@
 	"output": "DP-1",
 	"layer": "top",
 	"height": 35,  
-	"width": 0,
+	"width": 500,
 	"margin-top": 4,
-	"margin-right": 1450,
-	"margin-left": 1450,
-	"include": [ "~/.config/waybar/modules.txt" ],
+	"margin-right": 0,
+	"margin-left": 0,
+	"fixed-center": true,
+	"include": [ "~/.config/waybar/modules" ],
 	"modules-center": [
 		"temperature#GPU",
 		"custom/GPUwattage",
@@ -76,7 +81,10 @@
 		"cpu",
 		"temperature#CPU",
 		"custom/CPUclocks",
-		"memory"		
+		"memory",		
+		"disk#squid",
+		"disk#HDD",
+		"disk#SSD"
 	]
 },
 ]
